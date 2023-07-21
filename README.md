@@ -7,6 +7,6 @@ The intention of this project is to create a VST effect plugin for implementatio
 This project will be programmed using C++, primarily through the Visual Studio IDE (Integrated Development Environment).
 
 There will be three teams as follows:
-- User Interface Team
-- Signal Algorithms Team
-- C++ Development Team
+1. User Interface Team - configure faders, knobs, scopes, plugin settings and appearance.
+3. Signal Algorithms Team - develop digital audio data processing techniques.
+4. C++ Development Team - work with JUCE framework to create VST3 format.
