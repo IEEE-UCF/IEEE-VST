@@ -10,6 +10,3 @@ There will be three teams as follows:
 1. User Interface Team (#ui-ux) - configure faders, knobs, scopes, plugin settings and appearance.
 3. Signal Algorithms Team (#dsp) - develop digital audio data processing techniques.
 4. C++ Development Team (#cpp)- work with JUCE framework to create VST3 format.
-
-Compiling
-Once cloned, need to open the project in Visual Studio and build.
