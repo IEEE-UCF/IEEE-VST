@@ -10,9 +10,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IEEE-VST - VST3", "IEEE-VST_VST3.vcxproj", "{B8F2A734-D791-0F4D-24CE-84CB0BFF7563}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BDD4D3E4-FA28-6796-C388-599720615B2C} = {BDD4D3E4-FA28-6796-C388-599720615B2C}
+		{2B2826AD-EF84-8458-69B5-2F20BBF08BD0} = {2B2826AD-EF84-8458-69B5-2F20BBF08BD0}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IEEE-VST - Shared Code", "IEEE-VST_SharedCode.vcxproj", "{BDD4D3E4-FA28-6796-C388-599720615B2C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IEEE-VST - VST3 Manifest Helper", "IEEE-VST_VST3ManifestHelper.vcxproj", "{2B2826AD-EF84-8458-69B5-2F20BBF08BD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +35,10 @@ Global
 		{BDD4D3E4-FA28-6796-C388-599720615B2C}.Debug|x64.Build.0 = Debug|x64
 		{BDD4D3E4-FA28-6796-C388-599720615B2C}.Release|x64.ActiveCfg = Release|x64
 		{BDD4D3E4-FA28-6796-C388-599720615B2C}.Release|x64.Build.0 = Release|x64
+		{2B2826AD-EF84-8458-69B5-2F20BBF08BD0}.Debug|x64.ActiveCfg = Debug|x64
+		{2B2826AD-EF84-8458-69B5-2F20BBF08BD0}.Debug|x64.Build.0 = Debug|x64
+		{2B2826AD-EF84-8458-69B5-2F20BBF08BD0}.Release|x64.ActiveCfg = Release|x64
+		{2B2826AD-EF84-8458-69B5-2F20BBF08BD0}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
