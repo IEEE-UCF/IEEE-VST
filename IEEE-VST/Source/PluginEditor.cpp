@@ -16,9 +16,9 @@ IEEEVSTAudioProcessorEditor::IEEEVSTAudioProcessorEditor (IEEEVSTAudioProcessor&
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
-    setVisible(true);
+    //setSize(400, 300);
     enableResizeability();
+    setVisible(true);
 }
 
 /**
@@ -34,9 +34,9 @@ void IEEEVSTAudioProcessorEditor::enableResizeability() {
     // get the max and min widths and heights
     int maxScreenHeight = display->totalArea.getHeight();
     int maxScreenWidth = display->totalArea.getWidth();
-    int minScreenHeight = maxScreenHeight / 32;
-    int minScreenWidth = maxScreenWidth / 32;
-    //std::cout << "height " << maxScreenHeight << std::endl << "width " << maxScreenWidth << std::endl;
+    int minScreenHeight = maxScreenHeight / 8;
+    int minScreenWidth = maxScreenWidth / 8;
+    std::cout << "height " << minScreenHeight << std::endl << "width " << minScreenHeight << std::endl;
     // set the resize limits using the values above
     setResizeLimits(minScreenWidth, minScreenHeight, maxScreenWidth, maxScreenHeight);
     //std::cout << "scale factor" << display->scale << std::endl;
