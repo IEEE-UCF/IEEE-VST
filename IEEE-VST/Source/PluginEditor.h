@@ -23,6 +23,7 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
+    void enableResizeability();
 
 private:
     // This reference is provided as a quick way for your editor to
