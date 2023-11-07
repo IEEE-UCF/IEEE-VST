@@ -13,5 +13,5 @@ There will be three teams as follows:
 
 <h1>Features</h1>
 <h2>Time-based</h2>
-[] Delay
-[] Reverb
+- [] Delay
+- [] Reverb
