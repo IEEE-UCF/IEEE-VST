@@ -12,6 +12,8 @@ There will be three teams as follows:
 4. C++ Development Team (#cpp)- work with JUCE framework to create VST3 format.
 
 <h1>Features</h1>
-<h2>Time-based</h2>
-- [ ] Delay
-- [ ] Reverb
+After cloning, run the following command to pull in the JUCE Framework:
+git submodule update --init --recursive
+
+<h1>Features</h1>
+
