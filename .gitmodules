@@ -4,4 +4,4 @@
 
 [submodule "Framework"]
 	path = Framework
-	url = git@github.com:IEEE-UCF/IEEE-VST.git
+	url = git@github.com:IEEE-UCF/Framework_JUCE.git
