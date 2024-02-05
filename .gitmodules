@@ -3,5 +3,5 @@
     url = git@github.com:juce-framework/JUCE.git
 
 [submodule "Framework"]
-	path = Framework
-	url = git@github.com:IEEE-UCF/Framework_JUCE.git
+    path = Framework
+    url = git@github.com:IEEE-UCF/Framework_JUCE.git
