@@ -17,3 +17,7 @@ git submodule update --init --recursive
 
 <h1>Features</h1>
 
+<h1>To-Do's<h1>
+1. Research VST Plugin UI
+    a. Do a sketch on paper to present for the next meeting.
+2. Search on Youtube "JUCE VST UI".

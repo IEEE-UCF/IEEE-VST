@@ -1,3 +1,0 @@
-Reminders:
-- Research VST UI.
-- "JUCE VST UI" on Youtube and see what it's about.
