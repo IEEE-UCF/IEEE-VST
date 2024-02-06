@@ -15,9 +15,9 @@ There will be three teams as follows:
 After cloning, run the following command to pull in the JUCE Framework:
 git submodule update --init --recursive
 
-<h1>Features</h1>
-
 <h1>To-Do's<h1>
+The funny To-do's
 1. Research VST Plugin UI
     a. Do a sketch on paper to present for the next meeting.
 2. Search on Youtube "JUCE VST UI".
+3. Research on CMake and how it works.
