@@ -1,7 +1,0 @@
-[submodule "JUCE"]
-    path = JUCE
-    url = git@github.com:juce-framework/JUCE.git
-
-[submodule "Framework_JUCE"]
-	path = Framework_JUCE
-	url = git@github.com:IEEE-UCF/Framework_JUCE.git
