@@ -1,0 +1,71 @@
+1. Modify CmakeLists
+    Project name
+    Company name
+    Bundle ID
+    Maybe talk about adding libraries
+
+PluginEditor.h
+    Add constructor for PluginEditor that includes an argument for 
+    AudioProcessorValueTreeState object
+        PluginEditor(PluginProcess& p, juce::AudioProcessorValueTreeState& vts);
+    Make typedefs for slider and button attachments:
+        typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
+        typedef juce::AudioProcessorValueTreeState::ButtonAttachment ButtonAttachment;
+    Declare Variables in private section
+        juce::AudioProcessorValueTreeStte& valueTreeState;
+
+        juce::Slider gainSlider;
+        juce::Label gainLabel;
+        std::unique_ptr<SliderAttachment> gainAttachment;
+
+        juce::Slider cutoffFrequencySliderLow;
+        std::unique_ptr<SliderAttachment> cutoffFrequencyAttachmentLow;
+        juce::Label cutoffFrequencyLabelLow;
+
+        juce::Slider cutoffFrequencySliderHigh;
+        std::unique_ptr<SliderAttachment> cutoffFrequencyAttachmentHigh;
+        juce::Label cutoffFrequencyLabelHigh;
+
+        void openButtonClicked();
+        juce::TextButton openButton;
+    
+        juce::AudioFormatManager formatManager; 
+        std::unique_ptr<juce::FileChooser> chooser;
+
+        juce::Label irName;
+
+PluginEditor.cpp
+    Constructor:
+        Modify constructor to match that of PluginEditor.h (added vts)
+        Set attributes for visual elements 
+        Set callback function for clicking button
+        Set size of window
+
+    paint()
+        Set basic stuff
+
+    Resized()
+        Set stuff
+    Callback function
+
+PluginProcessor.h:
+    Add includes:
+        #include <juce_dsp/juce_dsp.h>
+        #include <juce_audio_formats/juce_audio_formats.h>
+        #include <juce_gui_basics/juce_gui_basics.h>
+
+    Create variables, public and private
+        juce::AudioProcessorValueTreeState parameters;
+        Variables for parameters
+        Filter objects, convolution object
+
+
+PluginProcessor.cpp:
+    Add parameters to constructor arguments?
+    In constructor body, add getRawParameters Stuff
+
+    prepareToPlay():
+        Initialize variables and other stuff
+
+    set and get state stuff:
+    
