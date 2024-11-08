@@ -43,7 +43,7 @@ PluginEditor::PluginEditor (PluginProcessor& p, juce::AudioProcessorValueTreeSta
     openButton.onClick = [this] { openButtonClicked(); };
 
     processorRef.root = juce::File::getSpecialLocation (juce::File::userDesktopDirectory);
-    formatManager.registerBasicFormats();
+    //formatManager.registerBasicFormats();
 
     addAndMakeVisible (irName);
 
@@ -72,7 +72,7 @@ void PluginEditor::openButtonClicked()
                 processorRef.root = file.getParentDirectory().getFullPathName();
 
                 processorRef.convolution.reset();
-                processorRef.convolution.loadImpulseResponse (file, juce::LADSPAPluginInstance::Convolution::Stereo::yes, juce::dsp::Convolution::Trim::yes, 0);
+                processorRef.convolution.loadImpulseResponse (file, juce::dsp::Convolution::Stereo::yes, juce::dsp::Convolution::Trim::yes, 0);
                 irName.setText (file.getFileName(), juce::dontSendNotification);
             }
         });

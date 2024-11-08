@@ -1,6 +1,9 @@
 #pragma once
 
 #include <juce_audio_processors/juce_audio_processors.h>
+#include <juce_dsp/juce_dsp.h>
+#include <juce_audio_formats/juce_audio_formats.h>
+#include <juce_gui_basics/juce_gui_basics.h>
 
 #if (MSVC)
 #include "ipps.h"
@@ -38,6 +41,20 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+
+    juce::File root, savedFile;
+
+    juce::dsp::Convolution convolution;
+
 private:
+    juce::AudioProcessorValueTreeState parameters;
+    
+    std::atomic<float>* gainParameter = nullptr;
+
+    std::atomic<float>* cutoffFrequencyParameterHigh = nullptr;
+    std::atomic<float>* cutoffFrequencyParameterLow = nullptr;
+
+    juce::dsp::ProcessSpec spec;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginProcessor)
 };

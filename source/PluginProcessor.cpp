@@ -10,8 +10,34 @@ PluginProcessor::PluginProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), 
+                        parameters(*this, nullptr, juce::Identifier("IEEEPlugin"), 
+                            { 
+                                std::make_unique<juce::AudioParameterFloat>(  "gain", // parameterID
+                                                                              "Gain", // parameter name
+                                                                              "0.0f", // minimum value
+                                                                              "1.2f", // maximum value
+                                                                              "1.0f"), // default value
+                                std::make_unique<juce::AudioParameterFloat> ("cutoff_frequency_high", // parameterID
+                                                                            "Cutoff Frequency High", // parameter name
+                                                                            juce::NormalisableRange {20.f, 20000.f, 0.1f, 0.2f, false}, 
+                                                                            20000.f),
+
+                                  std::make_unique<juce::AudioParameterFloat> ("cutoff_frequency_low", // parameterID
+                                                                              "Cutoff Frequency Low", // parameter name
+                                                                              juce::NormalisableRange { 20.f, 20000.f, 0.1f, 0.2f, false },
+                                                                              20.f)                                          
+                        
+                            })
+
 {
+    gainParameter = parameters.getRawParameterValue ("gain");
+    cutoffFrequencyParameterHigh = parameters.getRawParameterValue ("cutoff_frequency_high");
+    cutoffFrequencyParameterLow = parameters.getRawParameterValue ("cutoff_frequency_low");
+
+
+
+
 }
 
 PluginProcessor::~PluginProcessor()
@@ -88,6 +114,15 @@ void PluginProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+
+    spec.maximumBlockSize = samplesPerBlock;
+    spec.sampleRate = sampleRate;
+    spec.numChannels = getTotalNumInputChannels();
+
+
+    convolution.reset();
+    convolution.prepare(spec);
+
     juce::ignoreUnused (sampleRate, samplesPerBlock);
 }
 
@@ -128,6 +163,9 @@ void PluginProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
+
+    juce::dsp::AudioBlock<float> block { buffer };
+
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
     // guaranteed to be empty - they may contain garbage).
@@ -136,6 +174,8 @@ void PluginProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
+
+    convolution.process (juce::dsp::ProcessContextReplacing<float> (block));
 
     // This is the place where you'd normally do the guts of your plugin's
     // audio processing...
@@ -168,13 +208,23 @@ void PluginProcessor::getStateInformation (juce::MemoryBlock& destData)
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
-    juce::ignoreUnused (destData);
+
+    auto state = parameters.copyState();
+    std::unique_ptr<juce::XmlElement> xml (state.createXml());
+    copyXmlToBinary (*xml, destData);
+    // juce::ignoreUnused (destData);
 }
 
 void PluginProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+    std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+
+    if (xmlState.get() != nullptr)
+        if (xmlState->hasTagName (parameters.state.getType()))
+            parameters.replaceState (juce::ValueTree::fromXml (*xmlState));
+
     juce::ignoreUnused (data, sizeInBytes);
 }
 
