@@ -15,9 +15,9 @@ PluginProcessor::PluginProcessor()
                             { 
                                 std::make_unique<juce::AudioParameterFloat>(  "gain", // parameterID
                                                                               "Gain", // parameter name
-                                                                              "0.0f", // minimum value
-                                                                              "1.2f", // maximum value
-                                                                              "1.0f"), // default value
+                                                                              0.0f, // minimum value
+                                                                              1.2f, // maximum value
+                                                                              1.0f), // default value
                                 std::make_unique<juce::AudioParameterFloat> ("cutoff_frequency_high", // parameterID
                                                                             "Cutoff Frequency High", // parameter name
                                                                             juce::NormalisableRange {20.f, 20000.f, 0.1f, 0.2f, false}, 
