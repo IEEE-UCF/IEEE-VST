@@ -16,6 +16,27 @@ public:
     void resized() override;
 
 private:
+
+
+    juce::Slider decaySlider;
+    juce::Label decayLabel;
+
+    juce::Slider gainSlider;
+    juce::Label gainLabel;
+    
+    juce::Slider wetDrySlider;
+    juce::Label wetDryLabel;
+
+    juce::Slider lowCutSlider;
+    juce::Label lowCutLabel;
+
+    juce::Slider highCutSlider;
+    juce::Label highCutLabel;
+
+    juce::Image IEEELogo;
+    juce::ImageComponent IEEELogoComponent;
+
+    juce::Label vapoverbLabel;
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     PluginProcessor& processorRef;
