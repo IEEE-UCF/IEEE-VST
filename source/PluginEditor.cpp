@@ -32,7 +32,7 @@ PluginEditor::PluginEditor (PluginProcessor& p)
     addAndMakeVisible (lowCutLabel);
 
     // high cut slider and label
-    highCutSlider.setSliderSnapsToMousePosition (juce::Slider::SliderStyle::Rotary);
+    highCutSlider.setSliderStyle (juce::Slider::SliderStyle::Rotary);
     addAndMakeVisible (highCutSlider);
     highCutLabel.setText ("High Cut Frequency", juce::dontSendNotification);
     addAndMakeVisible (highCutLabel);
@@ -60,8 +60,7 @@ void PluginEditor::resized()
 {
     // layout the positions of your child components here
     auto area = getLocalBounds();
-    
 
-    decaySlider.setBounds (JUCE_LIVE_CONSTANT (150), JUCE_LIVE_CONSTANT (200), JUCE_LIVE_CONSTANT (100), JUCE_LIVE_CONSTANT (100));
-    decayLabel.setBounds (JUCE_LIVE_CONSTANT (150), JUCE_LIVE_CONSTANT (300), JUCE_LIVE_CONSTANT (100), JUCE_LIVE_CONSTANT (30));
+    decaySlider.setBounds (150, 200, 100, 100);
+    decayLabel.setBounds (150, 300, 100, 30);
 }

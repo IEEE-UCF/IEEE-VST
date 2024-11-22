@@ -10,12 +10,49 @@ PluginProcessor::PluginProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
+
+                        parameters (*this, nullptr, juce::Identifier ("AlgoReverbPlugin"), 
+                        {
+                            std::make_unique<juce::AudioParameterFloat> ("decay",
+                                                                        "Decay",
+                                                                        0.0f,
+                                                                        1.0f,
+                                                                        0.5f),
+                            std::make_unique<juce::AudioParameterFloat> ("wet_dry", 
+                                                                        "Wet / Dry", 
+                                                                        0.0f, 
+                                                                        1.0f, 
+                                                                        0.5f),
+                            std::make_unique<juce::AudioParameterFloat> ("gain", 
+                                                                        "Gain", 
+                                                                        0.0f, 
+                                                                        1.0f,
+                                                                        0.5f),
+                            std::make_unique<juce::AudioParameterFloat> ("low_pass", 
+                                                                        "Low Pass", 
+                                                                        0.0f, 
+                                                                        1.0f, 
+                                                                        0.5f),
+                            std::make_unique<juce::AudioParameterFloat> ("high_pass", 
+                                                                        "High Pass", 
+                                                                        0.0f, 
+                                                                        1.0f, 
+                                                                        0.5f),          
+                        })
+
+
 {
+    decayParameter = parameters.getRawParameterValue ("decay");
+    wetDryParameter = parameters.getRawParameterValue ("wet_dry");
+    gainParameter = parameters.getRawParameterValue ("gain");
+    lowPassParameter = parameters.getRawParameterValue ("low_pass");
+    highPassParameter = parameters.getRawParameterValue ("high_pass");
 }
 
 PluginProcessor::~PluginProcessor()
 {
+    
 }
 
 //==============================================================================
@@ -88,6 +125,14 @@ void PluginProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+
+    spec.maximumBlockSize = samplesPerBlock;
+    spec.sampleRate = sampleRate;
+    spec.numChannels = getTotalNumInputChannels();
+
+    algoReverb.reset();
+    algoReverb.prepare (spec);
+
     juce::ignoreUnused (sampleRate, samplesPerBlock);
 }
 
@@ -128,6 +173,8 @@ void PluginProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
+    juce::dsp::AudioBlock<float> block { buffer };
+
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
     // guaranteed to be empty - they may contain garbage).
@@ -136,6 +183,8 @@ void PluginProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
+
+    algoReverb.process (juce::dsp::ProcessContextReplacing<float> (block));
 
     // This is the place where you'd normally do the guts of your plugin's
     // audio processing...
@@ -168,13 +217,23 @@ void PluginProcessor::getStateInformation (juce::MemoryBlock& destData)
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
-    juce::ignoreUnused (destData);
+
+    auto state = parameters.copyState();
+    std::unique_ptr<juce::XmlElement> xml(state.createXml());
+    copyXmlToBinary (*xml, destData);
+    // juce::ignoreUnused (destData);
 }
 
 void PluginProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+    std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+
+    if (xmlState.get() != nullptr)
+        if (xmlState->hasTagName (parameters.state.getType()))
+            parameters.replaceState (juce::ValueTree::fromXml (*xmlState));
+
     juce::ignoreUnused (data, sizeInBytes);
 }
 

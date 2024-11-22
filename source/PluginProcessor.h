@@ -41,6 +41,18 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    juce::dsp::DelayLine<float, juce::dsp::DelayLineInterpolationTypes::Linear> algoReverb;
+
 private:
+    juce::AudioProcessorValueTreeState parameters;
+
+    std::atomic<float>* decayParameter = nullptr;
+    std::atomic<float>* wetDryParameter = nullptr;
+    std::atomic<float>* gainParameter = nullptr;
+    std::atomic<float>* lowPassParameter = nullptr;
+    std::atomic<float>* highPassParameter = nullptr;
+
+    juce::dsp::ProcessSpec spec;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginProcessor)
 };
